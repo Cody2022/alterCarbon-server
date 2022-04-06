@@ -1,2 +1,2 @@
 # AlterCarbon
-Team Name:Eco Geek
+Team Name: Eco Geek
