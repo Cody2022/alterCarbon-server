@@ -11,7 +11,7 @@ function welcome (req, res){
 }
 
 function inputs(req,res){
-    res.sendFile(path.join(__dirname,'.alterCarbon/index.html'));
+    
 }
 
 module.exports = {welcome,inputs}

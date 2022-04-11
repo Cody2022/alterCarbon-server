@@ -11,7 +11,9 @@ let plasticWaste
 
 app.get("/", welcome)
 
-app.get("/userInfo", inputs)
+app.get("/userInfo", (req,res)=>{
+  res.sendFile('./index.html', {'root':"C:/Programming/alterCarbon"});
+})
 
 const PORT = 4000;
 function echoPortNumber() {
