@@ -25,16 +25,14 @@ const electricityEstimate=async (electricity=0)=>{
                 headers: headers,
             });
             let electricityCO2=response.data;
-            console.log(electricityCO2);
-            return (electricityCO2.co2e);
+            return (Number((electricityCO2.co2e).toFixed(2)));
+            
         }
         catch (err) {
             // Handle Error Here
             console.error(err);
         };
     } 
-
-// electricityEstimate(294)
 
 /* naturalGasEstimate function*/
 const natualGasEstimate=async (gasGJ=0)=>{
@@ -52,8 +50,7 @@ const natualGasEstimate=async (gasGJ=0)=>{
                headers: headers,
            });
            let gasCO2=response.data;
-           console.log(gasCO2);
-           return (gasCO2.co2e);
+           return (Number((gasCO2.co2e).toFixed(2)));
        }
        catch (err) {
            // Handle Error Here
@@ -61,7 +58,6 @@ const natualGasEstimate=async (gasGJ=0)=>{
        };
    } 
 
-//    natualGasEstimate(9)
 
 /* waterEstimate function*/
 const waterEstimate=async (volume=0)=>{
@@ -79,15 +75,13 @@ const waterEstimate=async (volume=0)=>{
            headers: headers,
        });
        let waterCO2=response.data;
-       console.log(waterCO2);
-       return (waterCO2.co2e);
+       return (Number((waterCO2.co2e).toFixed(2)));
    }
    catch (err) {
        // Handle Error Here
        console.error(err);
    };
 } 
-// waterEstimate(9)
 
 /* passengerCarEstimate function*/
 const passengerCarEstimate=async (distance=0)=>{
@@ -105,16 +99,13 @@ const passengerCarEstimate=async (distance=0)=>{
             headers: headers,
         });
         let carCO2=response.data;
-        console.log(carCO2);
-        return (carCO2.co2e);
+        return (Number((carCO2.co2e).toFixed(2)));
         }
         catch (err) {
             // Handle Error Here
             console.error(err);
         };
 } 
-
-// passengerCarEstimate(10)
 
 /* plasticWasteEstimate function*/
 const plasticWasteEstimate=async (weight=0)=>{
@@ -132,15 +123,14 @@ const plasticWasteEstimate=async (weight=0)=>{
            headers: headers,
        });
        let plasticCO2=response.data;
-       console.log(plasticCO2);
-       return (plasticCO2.co2e);
+       console.log("typeof", typeof plasticCO2);
+       return (Number((plasticCO2.co2e).toFixed(4)));
    }
    catch (err) {
        // Handle Error Here
        console.error(err);
    };
 } 
-// plasticWasteEstimate(20)
 
 /* plasticWasteEstimate function*/
 const foodWasteEstimate=async (weight=0)=>{
@@ -158,21 +148,30 @@ const foodWasteEstimate=async (weight=0)=>{
            headers: headers,
        });
        let foodCO2=response.data;
-       console.log(foodCO2);
-       return (foodCO2.co2e);
+       return (Number((foodCO2.co2e).toFixed(4)));
    }
    catch (err) {
        // Handle Error Here
        console.error(err);
    };
 } 
-// foodWasteEstimate(20)
+
+const carbonCalculation=async(carbonSources)=>{
+    let {electricity, nGas, water, food, plastic, car}=carbonSources;
+    try {
+        let electricityco2e=await electricityEstimate(Number(electricity));
+        let gasco2e=await natualGasEstimate(Number(nGas));
+        let waterco2e=await waterEstimate(Number(water));
+        let foodco2e=await foodWasteEstimate(Number(food));
+        let plasticco2e=await plasticWasteEstimate(Number(plastic));
+        let carco2e=await passengerCarEstimate(Number(car));
+
+        return {electricityco2e,gasco2e,waterco2e,foodco2e,plasticco2e,carco2e}
+    } catch(error){
+        console.log("carbonCalculation Error!")
+    }
+}
 
 module.exports = {
-  electricityEstimate,
-  natualGasEstimate,
-  waterEstimate,
-  passengerCarEstimate,
-  foodWasteEstimate,
-  plasticWasteEstimate,
+ carbonCalculation
 };
