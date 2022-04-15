@@ -58,16 +58,16 @@ router.post("/carbon", async (req,res)=>{
     res.send(carbonEmission)
 })
 
-// app.post("/register", async (req,res)=>{
-//     console.log("req.body is", req.body)
-//     const {username,password}=req.body;
-//     //if email is not found in the database, hash password and save account to database
-//     //else return "email" has been registered
-//     const createUser = async ({username,password}) 
-//     const hash=await bcrypt.hash(password, saltRounds=10);
-//     //Save hash to database
-//     res.json(hash);
-// })
+router.post("/register", async (req,res)=>{
+    console.log("req.body is", req.body)
+    const {username,password}=req.body;
+    //if email is not found in the database, hash password and save account to database
+    //else return "email" has been registered
+    
+    const hash=await bcrypt.hash(password, saltRounds=10);
+    //Save hash to database
+    res.json(hash);
+})
 
 /* ---------*/
 
