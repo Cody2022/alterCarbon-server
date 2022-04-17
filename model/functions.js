@@ -14,7 +14,7 @@ const welcomePage = () => {
     return `<p>Welcome to the page, please enter your name: </p>
     <input id="name" />
     <a id="link"><button onClick="test()">Go</button></a>`
-  }
+}
   
   
 // const loadUserState = async (id) => {

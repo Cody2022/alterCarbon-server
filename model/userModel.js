@@ -14,8 +14,24 @@ const User = mongoose.model("User", userSchema);
 
 const createUser = async (newUserData) => {
   let result = await User.create(newUserData);
+  console.log(result)
   return result;
 };
 
+const findUserById = async (id) => {
+  let user = await User.findById(id)
+  return user
+}
 
- module.exports = { createUser };
+const updateUserById = async (id, newUserData) => {
+  let updatedUser = await User.findByIdAndUpdate(id, newUserData, {new : true})
+  return updatedUser
+}
+
+const deleteUserById = async (id) => {
+  let deletedUser = await User.findByIdAndDelete(id)
+  return deletedUser
+}
+
+
+ module.exports = { createUser, findUserById, updateUserById, deleteUserById };
