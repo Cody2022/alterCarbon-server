@@ -1,9 +1,8 @@
 const mongoose = require("./mongoose");
 
-
 const userSchema = new mongoose.Schema({
-  userName: { type: String, required: true, unique:true },
-  password: { type: String, required: true},
+  userName: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
   electricity: { type: Number, default: 0 },
   naturalGas: { type: Number, default: 0 },
   carMiles: { type: Number, default: 0 },
@@ -16,26 +15,31 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
+// create user
 const createUser = async (newUserData) => {
   let result = await User.create(newUserData);
-  console.log(result)
+  console.log(result);
   return result;
 };
 
+//Read user data
 const findUserById = async (id) => {
-  let user = await User.findById(id)
-  return user
-}
+  let user = await User.findById(id);
+  return user;
+};
 
+//Update exiting user data
 const updateUserById = async (id, newUserData) => {
-  let updatedUser = await User.findByIdAndUpdate(id, newUserData, {new : true})
-  return updatedUser
-}
+  let updatedUser = await User.findByIdAndUpdate(id, newUserData, {
+    new: true,
+  });
+  return updatedUser;
+};
 
+//Delete User data
 const deleteUserById = async (id) => {
-  let deletedUser = await User.findByIdAndDelete(id)
-  return deletedUser
-}
+  let deletedUser = await User.findByIdAndDelete(id);
+  return deletedUser;
+};
 
-
- module.exports = { createUser, findUserById, updateUserById, deleteUserById };
+module.exports = { createUser, findUserById, updateUserById, deleteUserById };
