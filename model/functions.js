@@ -1,22 +1,20 @@
-const {findUserById, createUser} = require('./userModel.js');
-const {test} = require('./testMongoose');
+const { findUserById, createUser } = require("./userModel.js");
+const { test } = require("./testMongoose");
 
 const userInfo = {
-    userName : "",
-    electricity : 0,
-    naturalGas : 0,
-    carMiles : 0,
-    plasticWaste : 0
-}
-
+  userName: "",
+  electricity: 0,
+  naturalGas: 0,
+  carMiles: 0,
+  plasticWaste: 0,
+};
 
 const welcomePage = () => {
-    return `<p>Welcome to the page, please enter your name: </p>
+  return `<p>Welcome to the page, please enter your name: </p>
     <input id="name" />
-    <a id="link"><button onClick="test()">Go</button></a>`
-  }
-  
-  
+    <a id="link"><button onClick="test()">Go</button></a>`;
+};
+
 // const loadUserState = async (id) => {
 //   let loadedUserState = await findGameById(id);
 //   userInfo = loadedUserState;
@@ -39,4 +37,4 @@ const welcomePage = () => {
 // };
 
 //module.exports = {welcomePage,loadUserState, createUserState}
-module.exports = {welcomePage}
+module.exports = { welcomePage };
