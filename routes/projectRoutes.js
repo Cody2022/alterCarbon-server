@@ -80,10 +80,14 @@ router.post("/register", async (req, res) => {
 router.post("/weather", async(req,res)=>{
     const city=req.body.cityName;
     // console.log(city)
-    let response= await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${weatherAPI}`);
-    let weatherData=response.data
-    // console.log(weatherData)
-    res.send(weatherData);
+    try {
+      let response= await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${weatherAPI}`);
+      let weatherData=response.data
+      console.log(weatherData)
+      res.send(weatherData);
+   }catch(err){
+     console.log("Error", err.response.data)
+   }
 })
 
 /* ---------*/
