@@ -1,9 +1,20 @@
-const express = require("express");
-const { append } = require("express/lib/response");
+require("dotenv").config();
+const axios=require("axios");
+const express = require('express');
 const router = express.Router();
+<<<<<<< HEAD
 const {welcomePage,createUserState} = require("./../model/functions.js");
 
 const {createUser} = require("../model/userModel")
+=======
+const weatherAPI=process.env.weatherAPIKey;
+
+const {
+  welcomePage,
+  loadUserState,
+  createUserState,
+} = require("./../model/functions.js");
+>>>>>>> 727de780249a6939025adef82b8f07d071b9376d
 
 const { carbonCalculation } = require("../model/carbonCalculation.js");
 const bodyParser = require("body-parser");
@@ -70,10 +81,29 @@ router.post("/register", async (req, res) => {
   //if email is not found in the database, hash password and save account to database
   //else return "email" has been registered
 
-  const hash = await bcrypt.hash(password, (saltRounds = 10));
-  //Save hash to database
-  res.json(hash);
-});
+// router.post("/register", async (req,res)=>{
+//     console.log("req.body is", req.body)
+//     const {username,password}=req.body;
+//     //if email is not found in the database, hash password and save account to database
+//     //else return "email" has been registered
+    
+//     const hash=await bcrypt.hash(password, saltRounds=10);
+//     //Save hash to database
+//     res.json(hash);
+})
+
+router.post("/weather", async(req,res)=>{
+    const city=req.body.cityName;
+    try {
+      let response= await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${weatherAPI}`);
+      let weatherData=response.data
+      console.log(weatherData)
+      res.send(weatherData);
+   }catch(err){
+     console.log("Error", err.response.data)
+     res.status(500).send(err.response.data)
+   }
+})
 
 /* ---------*/
 
