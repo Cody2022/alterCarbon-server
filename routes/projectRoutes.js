@@ -1,11 +1,9 @@
 const express = require("express");
 const { append } = require("express/lib/response");
 const router = express.Router();
-const {
-  welcomePage,
-  loadUserState,
-  createUserState,
-} = require("./../model/functions.js");
+const {welcomePage,createUserState} = require("./../model/functions.js");
+
+const {createUser} = require("../model/userModel")
 
 const { carbonCalculation } = require("../model/carbonCalculation.js");
 const bodyParser = require("body-parser");
@@ -51,6 +49,15 @@ router.post("/login", (req, res) => {
     res.send({ Message: "Wrong email or password" });
   }
 });
+
+router.post("/signup", (req, res) =>{
+
+  const createdUserState =  createUser(req);
+  res.send(createdUserState)
+  console.log(( user = req.body.user))
+  console.log((passw = req.body.passw))
+
+})
 
 router.post("/carbon", async (req, res) => {
   const carbonEmission = await carbonCalculation(req.body);

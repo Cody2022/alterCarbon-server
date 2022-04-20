@@ -13,13 +13,19 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: new Date() },
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema,'users');
 
 // create user
 const createUser = async (newUserData) => {
-  let result = await User.create(newUserData);
-  console.log(result);
-  return result;
+  var newuser = new User ({userName: newUserData.body.user,password: newUserData.body.passw})
+  newuser.save(function (err, newuser){
+    if (err) return console.error(err);
+    console.log(newuser.userName + " created successfully!")
+  });
+
+  //let result = await User.createUserState(newUserData);
+  // console.log(result);
+  // return result;
 };
 
 //Read user data

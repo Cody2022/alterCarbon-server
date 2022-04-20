@@ -24,17 +24,17 @@ const welcomePage = () => {
 //   return returnMessage;
 // };
 
-// const createUserState = async (userName) => {
-//   let newUserState = await createUser({ userName : "", electricity : 0,
-//   naturalGas : 0,
-//   carMiles : 0,
-//   plasticWaste : 0  });
-//   let newUserId = newUserState._id;
-//   let Name = await findUserById(newUserId);
-//   userState = userName;
-//   let message = `<p>Hello ${Name} ${userInfo.userName}`;
-//   return message;
-// };
+const createUserState = async (userName) => {
+  // let newUserState = await createUser({ userName : "", electricity : 0,
+  // naturalGas : 0,
+  // carMiles : 0,
+  // plasticWaste : 0  });
+  // let newUserId = newUserState._id;
+  // let Name = await createUser(newUserId);
+  // userState = userInfo.userName;
+  // let message = `<p>Hello ${Name} ${userInfo.userName}`;
+  // return message;
+};
 
 //module.exports = {welcomePage,loadUserState, createUserState}
-module.exports = { welcomePage };
+module.exports = { welcomePage,createUserState };
