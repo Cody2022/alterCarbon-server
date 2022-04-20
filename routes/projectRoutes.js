@@ -8,11 +8,7 @@ const {createUser} = require("../model/userModel")
 
 const weatherAPI=process.env.weatherAPIKey;
 
-const {
-  welcomePage,
-  loadUserState,
-  createUserState,
-} = require("./../model/functions.js");
+const {loadUserState} = require("./../model/functions.js");
 
 const { carbonCalculation } = require("../model/carbonCalculation.js");
 const bodyParser = require("body-parser");
