@@ -18,4 +18,4 @@ async function test() {
   // console.log(deletedUser)
 }
 
-test();
+//test();
