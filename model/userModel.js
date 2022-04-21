@@ -13,19 +13,12 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: new Date() },
 });
 
-const User = mongoose.model("User", userSchema,'users');
+const User = mongoose.model("User", userSchema);
 
 // create user
 const createUser = async (newUserData) => {
-  var newuser = new User ({userName: newUserData.body.user,password: newUserData.body.passw})
-  newuser.save(function (err, newuser){
-    if (err) return console.error(err);
-    console.log(newuser.userName + " created successfully!")
-  });
-
-  //let result = await User.createUserState(newUserData);
-  // console.log(result);
-  // return result;
+  const newuser = await User.create (newUserData)
+  return newuser;
 };
 
 //Read user data
@@ -48,4 +41,11 @@ const deleteUserById = async (id) => {
   return deletedUser;
 };
 
-module.exports = { createUser, findUserById, updateUserById, deleteUserById };
+//-
+const findByName=async (userName)=>{
+  let nameFound=await User.findOne(userName)
+  if (!nameFound){console.log("Cannot find the username in database"); return false}
+  else {return nameFound;}
+}
+
+module.exports = { createUser, findUserById, updateUserById, deleteUserById,findByName };

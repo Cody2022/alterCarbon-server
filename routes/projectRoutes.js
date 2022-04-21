@@ -2,51 +2,30 @@ require("dotenv").config();
 const axios=require("axios");
 const express = require('express');
 const router = express.Router();
-const {welcomePage,createUserState} = require("./../model/functions.js");
-
-const {createUser} = require("../model/userModel")
-
-const weatherAPI=process.env.weatherAPIKey;
-
-const {loadUserState} = require("./../model/functions.js");
-
-const { carbonCalculation } = require("../model/carbonCalculation.js");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 
+const {createUser,findByName} = require("../model/userModel")
+
+const weatherAPI=process.env.weatherAPIKey;
+
+
+const { carbonCalculation } = require("../model/carbonCalculation.js");
+
+
 router.use(bodyParser.json());
 
-router.get("/welcome", (req, res) => {
-  let startMessage = welcomePage();
-  res.send(startMessage);
-});
-
-// router.get("/userInfo", async(req,res) =>{
-//     let userId = req.query.userId
-//     let loadedUserState = await loadUserState(userId)
-//     res.send(loadedUserState)
-// } )
-
-// router.get("/user", async(req,res) =>{
-//     let userName = req.query.userName
-//     let responseMessage = await createUserState(userName)
-//     res.send(responseMessage)
-// } )
-
-// router.post("/createUser", async(req,res) =>{
-//     console.log(req.body)
-//     // let userId = req.query.userId
-//     // let loadedUserState = await loadUserState(userId)
-//     // res.send(loadedUserState)
-//     res.send(req.body)
-// } )
-
 //*** Cody added the following section*/
-router.post("/login", (req, res) => {
-  console.log((user = req.body.username));
-  console.log((password = req.body.password));
+router.post("/login", async (req, res) => {
+    const user = req.body.username;
+    const password = req.body.password;
+
+    const userInfo=await findByName({userName:user})
+    // console.log("hash", hash)
+    const result=await bcrypt.compare(password, userInfo.password);
+    console.log("result is:", result)
   // connect with DB to check passwword and then send token to client
-  if (password === "123456") {
+  if (result === true) {
     res.send({
       token: "successful",
     });
@@ -55,13 +34,13 @@ router.post("/login", (req, res) => {
   }
 });
 
-router.post("/signup", (req, res) =>{
-
-  const createdUserState =  createUser(req);
+router.post("/signup", async (req, res) =>{
+  const {user, passw}=req.body;
+  const passwordHash=await bcrypt.hash(passw, saltRounds=10);
+  
+  const createdUserState =  createUser({userName:user, password:passwordHash});
   res.send(createdUserState)
-  console.log(( user = req.body.user))
-  console.log((passw = req.body.passw))
-
+  
 })
 
 router.post("/carbon", async (req, res) => {
@@ -69,22 +48,6 @@ router.post("/carbon", async (req, res) => {
   res.send(carbonEmission);
 });
 
-router.post("/register", async (req, res) => {
-  console.log("req.body is", req.body);
-  const { username, password } = req.body;
-  //if email is not found in the database, hash password and save account to database
-  //else return "email" has been registered
-
-// router.post("/register", async (req,res)=>{
-//     console.log("req.body is", req.body)
-//     const {username,password}=req.body;
-//     //if email is not found in the database, hash password and save account to database
-//     //else return "email" has been registered
-    
-//     const hash=await bcrypt.hash(password, saltRounds=10);
-//     //Save hash to database
-//     res.json(hash);
-})
 
 router.post("/weather", async(req,res)=>{
     const city=req.body.cityName;
