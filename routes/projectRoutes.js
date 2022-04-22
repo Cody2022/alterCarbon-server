@@ -11,6 +11,7 @@ const weatherAPI=process.env.weatherAPIKey;
 
 
 const { carbonCalculation } = require("../model/carbonCalculation.js");
+const res = require("express/lib/response");
 
 
 router.use(bodyParser.json());
@@ -21,7 +22,7 @@ router.post("/login", async (req, res) => {
     const password = req.body.password;
 
     const userInfo=await findByName({userName:user})
-    // console.log("hash", hash)
+    console.log("UserInfo", userInfo)
     const result=await bcrypt.compare(password, userInfo.password);
     console.log("result is:", result)
   // connect with DB to check passwword and then send token to client
@@ -41,6 +42,16 @@ router.post("/signup", async (req, res) =>{
   const createdUserState =  createUser({userName:user, password:passwordHash});
   res.send(createdUserState)
   
+})
+
+router.post("/history", async (req,res) => {
+  const user = req.body.user
+  console.log("user:", user)
+  const userInfo=await findByName({userName:user})
+  const {electricity,naturalGas,carMiles,plasticWaste,water,food} = userInfo;
+  console.log("UserInfo:",userInfo) 
+  res.send({electricity,naturalGas,carMiles,plasticWaste,water,food})
+
 })
 
 router.post("/carbon", async (req, res) => {
