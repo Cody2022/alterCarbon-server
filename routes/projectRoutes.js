@@ -1,5 +1,6 @@
 require("dotenv").config();
 const weatherAPI=process.env.weatherAPIKey;
+const debug=require("debug")("server:projectRoutes")
 
 const axios=require("axios");
 const express = require('express');
@@ -61,7 +62,7 @@ router.post("/history", async (req,res) => {
   console.log("user:", user)
   const userInfo=await findByName({userName:user})
   const {electricity,naturalGas,carMiles,plasticWaste,water,food} = userInfo;
-  console.log("UserInfo:",userInfo) 
+  debug("UserInfo:",userInfo) 
   res.send({electricity,naturalGas,carMiles,plasticWaste,water,food})
 
 })
@@ -77,10 +78,10 @@ router.post("/weather", async(req,res)=>{
     try {
       let response= await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${weatherAPI}`);
       let weatherData=response.data
-      console.log(weatherData)
+      debug(weatherData)
       res.send(weatherData);
    }catch(err){
-     console.log("Error", err.response.data)
+     debug("Error", err.response.data)
      res.status(500).send(err.response.data)
    }
 })
