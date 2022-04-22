@@ -9,6 +9,7 @@ const bcrypt = require("bcrypt");
 
 const {createUser,findByName} = require("../model/userModel")
 const { carbonCalculation } = require("../model/carbonCalculation.js");
+const res = require("express/lib/response");
 
 
 router.use(bodyParser.json());
@@ -53,6 +54,16 @@ router.post("/signup", async (req, res) =>{
   const createdUserState =  createUser({userName:user, password:passwordHash});
   res.send(createdUserState)
   
+})
+
+router.post("/history", async (req,res) => {
+  const user = req.body.user
+  console.log("user:", user)
+  const userInfo=await findByName({userName:user})
+  const {electricity,naturalGas,carMiles,plasticWaste,water,food} = userInfo;
+  console.log("UserInfo:",userInfo) 
+  res.send({electricity,naturalGas,carMiles,plasticWaste,water,food})
+
 })
 
 router.post("/carbon", async (req, res) => {
