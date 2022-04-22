@@ -1,4 +1,6 @@
 require("dotenv").config();
+const weatherAPI=process.env.weatherAPIKey;
+
 const axios=require("axios");
 const express = require('express');
 const router = express.Router();
@@ -6,10 +8,6 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 
 const {createUser,findByName} = require("../model/userModel")
-
-const weatherAPI=process.env.weatherAPIKey;
-
-
 const { carbonCalculation } = require("../model/carbonCalculation.js");
 
 
@@ -17,20 +15,34 @@ router.use(bodyParser.json());
 
 //*** Cody added the following section*/
 router.post("/login", async (req, res) => {
-    const user = req.body.username;
-    const password = req.body.password;
-
-    const userInfo=await findByName({userName:user})
-    // console.log("hash", hash)
-    const result=await bcrypt.compare(password, userInfo.password);
-    console.log("result is:", result)
-  // connect with DB to check passwword and then send token to client
-  if (result === true) {
+  const user = req.body.username;
+  const password = req.body.password;
+  if (user===undefined||password===undefined){
+     return res.send({
+      status: "noInput", 
+      id: user, 
+      message: "Enter username and password please"})
+  }
+  const userInfo = await findByName({ userName: user });
+  if (userInfo === null) {
     res.send({
-      token: "successful",
-    });
+      status: "notSignup", 
+      id: user, 
+      message: "New user, Signup first please"});
   } else {
-    res.send({ Message: "Wrong email or password" });
+    const result = await bcrypt.compare(password, userInfo.password);
+    if (result === true) {
+      res.send({
+        status: "successful",
+        id: user,
+        message: "Welcome"
+      });
+    } else {
+      res.send({
+        status: "failed",
+        id: user,
+        message: "Wrong username or password"});
+    }
   }
 });
 
