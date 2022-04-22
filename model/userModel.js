@@ -43,9 +43,13 @@ const deleteUserById = async (id) => {
 
 //-
 const findByName=async (userName)=>{
-  let nameFound=await User.findOne(userName)
-  if (!nameFound){console.log("Cannot find the username in database"); return false}
-  else {return nameFound;}
-}
+  try {
+    let nameFound=await User.findOne(userName)
+    return nameFound;
+  } catch(error) {
+    console.log("Cannot find the username in database"); 
+    }
+  }
+
 
 module.exports = { createUser, findUserById, updateUserById, deleteUserById,findByName };
