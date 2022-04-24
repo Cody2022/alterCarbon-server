@@ -8,10 +8,8 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 
-const {createUser,findByName} = require("../model/userModel")
+const {createUser,findByName, addRecordByName} = require("../model/userModel")
 const { carbonCalculation } = require("../model/carbonCalculation.js");
-const res = require("express/lib/response");
-
 
 router.use(bodyParser.json());
 
@@ -58,13 +56,16 @@ router.post("/signup", async (req, res) =>{
 })
 
 router.post("/history", async (req,res) => {
-  const user = req.body.user
-  console.log("user:", user)
-  const userInfo=await findByName({userName:user})
-  const {electricity,naturalGas,carMiles,plasticWaste,water,food} = userInfo;
-  debug("UserInfo:",userInfo) 
-  res.send({electricity,naturalGas,carMiles,plasticWaste,water,food})
-
+  try{
+    const user = req.body.user
+    console.log("user:", user)
+    const userInfo=await findByName({userName:user})
+    const {records} = userInfo;
+    // debug("UserInfo:",userInfo) 
+    res.send(records)
+  }catch(error){
+    res.status(500).send("Error in fetching records")
+  }
 })
 
 router.post("/carbon", async (req, res) => {
@@ -78,12 +79,25 @@ router.post("/weather", async(req,res)=>{
     try {
       let response= await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${weatherAPI}`);
       let weatherData=response.data
-      debug(weatherData)
+      // debug(weatherData)
       res.send(weatherData);
    }catch(err){
      debug("Error", err.response.data)
      res.status(500).send(err.response.data)
    }
+})
+
+router.post("/save", async(req, res)=>{
+  try{
+    const userName=req.body.userName;
+    const record=req.body.record;
+    // debug("userName is:", userName);
+    // debug("record type is:", typeof (record));
+    const resultsSaved=await addRecordByName(userName, record);
+    res.status(200).send(resultsSaved);
+  }catch(error){
+    res.status(500).send("Error when saving record")
+  }
 })
 
 /* ---------*/
