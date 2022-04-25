@@ -123,7 +123,6 @@ const plasticWasteEstimate=async (weight=0)=>{
            headers: headers,
        });
        let plasticCO2=response.data;
-       console.log("typeof", typeof plasticCO2);
        return (Number((plasticCO2.co2e).toFixed(4)));
    }
    catch (err) {

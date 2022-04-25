@@ -1,8 +1,8 @@
 const mongoose = require("./mongoose");
+const debug=require("debug")("server:userModel")
 
-const userSchema = new mongoose.Schema({
-  userName: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+const recordSchema=new mongoose.Schema({
+  date:{type: String, default: (new Date()).toLocaleString()},
   electricity: { type: Number, default: 0 },
   naturalGas: { type: Number, default: 0 },
   carMiles: { type: Number, default: 0 },
@@ -10,11 +10,17 @@ const userSchema = new mongoose.Schema({
   water: { type: Number, default: 0 },
   food: { type: Number, default: 0 },
   totalCarbon: { type: Number, default: 0 },
-  createdAt: { type: Date, default: new Date() },
+})
+
+const userSchema = new mongoose.Schema({
+  userName: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  records:[recordSchema],
+  createdAt:{type: Date, default: new Date()},
+  updatedAt: {type: Date, default: new Date()}
 });
 
 const User = mongoose.model("User", userSchema);
-
 // create user
 const createUser = async (newUserData) => {
   const newuser = await User.create (newUserData)
@@ -44,13 +50,23 @@ const deleteUserById = async (id) => {
 //-
 const findByName=async (userName)=>{
   try {
-    let nameFound=await User.findOne(userName)
-    return nameFound;
+    let docFoundByName=await User.findOne(userName)
+    return docFoundByName;
   } catch(error) {
-    console.log("Cannot find the username in database"); 
-    return null
+    debug("Cannot find the username in database"); 
     }
   }
 
+const addRecordByName=async (userName, record)=>{
+  try{
+    const userFound=await User.findOne({userName:userName});
+    userFound.records.push(record);
+    userFound.save();
+    debug("userFound", userFound);
+    return userFound;
+  } catch (error){
+    debug("Error at addRecordByName")
+  }
+}
 
-module.exports = { createUser, findUserById, updateUserById, deleteUserById,findByName };
+module.exports = { createUser, findUserById, updateUserById, deleteUserById, findByName, addRecordByName };
