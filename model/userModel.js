@@ -48,6 +48,7 @@ const findByName=async (userName)=>{
     return nameFound;
   } catch(error) {
     console.log("Cannot find the username in database"); 
+    return null
     }
   }
 
