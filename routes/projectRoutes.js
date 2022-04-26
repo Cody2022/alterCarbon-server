@@ -107,6 +107,8 @@ router.post("/history", async (req,res) => {
   }
 })
 
+router.post("/map", )
+
 router.post("/carbon", async (req, res) => {
   const carbonEmission = await carbonCalculation(req.body);
   res.send(carbonEmission);
