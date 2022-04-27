@@ -85,15 +85,6 @@ router.post("/signup", async (req, res) => {
 };
 });
 
-router.post("/history", async (req, res) => {
-  const user = req.body.user;
-  console.log("user:", user);
-  const userInfo = await findByName({ userName: user });
-  const { electricity, naturalGas, carMiles, plasticWaste, water, food } =
-    userInfo;
-  debug("UserInfo:", userInfo);
-  res.send({ electricity, naturalGas, carMiles, plasticWaste, water, food });
-});
 router.post("/history", async (req,res) => {
   try{
     const user = req.body.user
