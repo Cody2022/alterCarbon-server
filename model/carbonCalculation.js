@@ -172,5 +172,6 @@ const carbonCalculation=async(carbonSources)=>{
 }
 
 module.exports = {
- carbonCalculation
+ carbonCalculation,
+ electricityEstimate
 };

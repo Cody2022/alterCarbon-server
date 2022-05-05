@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 
 const { createUser, findByName,addRecordByName } = require("../model/userModel");
-const { carbonCalculation } = require("../model/carbonCalculation.js");
+const { carbonCalculation, electricityEstimate } = require("../model/carbonCalculation.js");
 const res = require("express/lib/response");
 
 router.use(bodyParser.json());
@@ -130,6 +130,18 @@ router.post("/save", async(req, res)=>{
   }catch(error){
     res.status(500).send("Error when saving record")
   }
+})
+
+router.post("/electricity", async(req,res)=>{
+  try{
+    const electricity=Number (req.body.electricity);
+    const electricityCO2=await electricityEstimate(electricity);
+    res.status(200).send({electricityCO2});
+
+  }catch(error){
+    res.status(400).send("Error in checking carbon footprint")
+  }
+
 })
 
 /* ---------*/
