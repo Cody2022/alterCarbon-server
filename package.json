@@ -31,6 +31,11 @@
     "mongodb": "^4.5.0",
     "mongoose": "^6.2.11"
   },
+  "browserslist": {
+    "production": [
+      ">0.25%",
+      "not dead"
+    ],
   "devDependencies": {
     "nodemon": "^2.0.15"
   }
