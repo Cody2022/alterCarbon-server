@@ -91,7 +91,6 @@ router.post("/history", async (req,res) => {
     console.log("user:", user)
     const userInfo=await findByName({userName:user})
     const {records} = userInfo;
-    // debug("UserInfo:",userInfo) 
     res.send(records)
   }catch(error){
     res.status(500).send("Error in fetching records")
