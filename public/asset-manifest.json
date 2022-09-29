@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.32e9718d.css",
+    "main.js": "/static/js/main.1fb2d63f.js",
+    "static/js/483.e0f2a80e.chunk.js": "/static/js/483.e0f2a80e.chunk.js",
+    "static/js/787.0bca8be2.chunk.js": "/static/js/787.0bca8be2.chunk.js",
+    "static/media/SignupBackground.png": "/static/media/SignupBackground.3b7bc1fa8933975a8dd8.png",
+    "static/media/LoginBackground.png": "/static/media/LoginBackground.d663edfa0256162d0f22.png",
+    "static/media/calPage.png": "/static/media/calPage.a5086bc1c09c226d862d.png",
+    "static/media/climate1.jpg": "/static/media/climate1.d92bf6df774799cf2801.jpg",
+    "static/media/background.jpg": "/static/media/background.51d7120ea37a14605302.jpg",
+    "static/media/climate3.jpg": "/static/media/climate3.96a34d8e90c6a9123d96.jpg",
+    "static/media/historybg.jpg": "/static/media/historybg.414a180b182902650fda.jpg",
+    "static/media/climate2.jpg": "/static/media/climate2.c2eac266d0d478ca4362.jpg",
+    "static/media/logo.jpg": "/static/media/logo.715bdf00c1789af95931.jpg",
+    "index.html": "/index.html",
+    "main.32e9718d.css.map": "/static/css/main.32e9718d.css.map",
+    "main.1fb2d63f.js.map": "/static/js/main.1fb2d63f.js.map",
+    "483.e0f2a80e.chunk.js.map": "/static/js/483.e0f2a80e.chunk.js.map",
+    "787.0bca8be2.chunk.js.map": "/static/js/787.0bca8be2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.32e9718d.css",
+    "static/js/main.1fb2d63f.js"
+  ]
+}
